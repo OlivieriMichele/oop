@@ -16,17 +16,59 @@ public class TimeTableFactoryImpl implements TimetableFactory{
 
     @Override
     public Timetable single(String activity, String day) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<String,Map<String,Integer>> data = new HashMap<>();
+        data.putIfAbsent(activity, new HashMap<>());
+        data.get(activity).put(day, 1);
+        return new TimetableImpl(data);
     }
 
     @Override
     public Timetable join(Timetable table1, Timetable table2) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<String, Map<String,Integer>> data = new HashMap<>();
+
+        Set<String> activities = new HashSet<>(table1.activities());
+        activities.addAll(table2.activities());
+
+        Set<String> days = new HashSet<>(table1.days());
+        days.addAll(table2.days());
+
+        for(var activity : activities){
+            Map<String,Integer> dayMap = new HashMap<>();
+            for(var day : days) {
+                int sum = table1.getSingleData(activity, day) + table2.getSingleData(activity, day);
+                if(sum>0){
+                    dayMap.put(day, sum);
+                }
+            }
+            if(!dayMap.isEmpty()) {
+                data.put(activity, dayMap);
+            }
+        }
+
+        return new TimetableImpl(data);
     }
 
     @Override
     public Timetable cut(Timetable table, BiFunction<String, String, Integer> bounds) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<String, Map<String,Integer>> data = new HashMap<>();
+        Set<String> activities = new HashSet<>(table.activities());
+        Set<String> days = new HashSet<>(table.days());
+
+        for(var activity : activities){
+            Map<String,Integer> dayHour = new HashMap<>();
+            for(var day : days) {
+                if( bounds.apply(activity,day) > table.getSingleData(activity, day)) {
+                    dayHour.put(day, table.getSingleData(activity, day));
+                } else{
+                    dayHour.put(day, bounds.apply(activity, day));
+                }
+            }
+            if(!dayHour.isEmpty()){
+                data.put(activity, dayHour);
+            }
+        }
+
+        return new TimetableImpl(data);
     }
 
     private static class TimetableImpl implements Timetable {
