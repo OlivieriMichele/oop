@@ -41,7 +41,7 @@ public class Test_e3 {
 	
 	@BeforeEach
 	public void initFactory() {
-		// this.factory = new TimeSheetFactoryImpl();
+		this.factory = new TimeSheetFactoryImpl();
 	}
 	
 	@Test
