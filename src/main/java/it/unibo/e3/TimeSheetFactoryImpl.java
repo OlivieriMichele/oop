@@ -64,7 +64,7 @@ public class TimeSheetFactoryImpl implements TimeSheetFactory{
     public TimeSheet ofPartialMap(List<String> activities, List<String> days, Map<Pair<String, String>, Integer> data) {
         
         List<List<Integer>> dati = new ArrayList<>();
-        for (String activity : activities) {
+        for (@SuppressWarnings("unused")String activity : activities) {
             List<Integer> row = new ArrayList<>(Collections.nCopies(days.size(), 0));
             dati.add(row);
         }
