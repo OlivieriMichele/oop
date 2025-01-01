@@ -36,7 +36,7 @@ public class Test13 {
 
 	@BeforeEach
 	public void initFactory() {
-		//this.iih = new InfiniteIteratorHelpersImpl();
+		this.iih = new InfiniteIteratorHelpersImpl();
 	}
 
 	@Test
