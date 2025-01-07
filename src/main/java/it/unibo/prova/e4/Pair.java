@@ -1,4 +1,4 @@
-package a02a.e2;
+package it.unibo.prova.e4;
 
 /*
  * A standard generic Pair<X,Y>, with getters, hashCode, equals, and toString well implemented. 

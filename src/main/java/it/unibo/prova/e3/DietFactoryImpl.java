@@ -63,10 +63,7 @@ public class DietFactoryImpl implements DietFactory {
             }
 
             private boolean checkCalories(List<Double> list){
-                int sum = 0;
-                for(var elem : list){
-                    sum += elem;
-                }
+                Double sum = list.stream().mapToDouble(Double::doubleValue).sum();
                 return sum >= this.min && sum <= this.max;
             }
 
